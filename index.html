@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算月龄和天数</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>计算月龄和天数</h1>
+        <input type="date" id="birthdate" placeholder="选择出生日期">
+        <button onclick="calculateAge()">计算</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            const birthdate = document.getElementById('birthdate').value;
+            if (!birthdate) {
+                alert('请选择出生日期');
+                return;
+            }
+
+            const birthDate = new Date(birthdate);
+            const currentDate = new Date();
+
+            const years = currentDate.getFullYear() - birthDate.getFullYear();
+            const months = currentDate.getMonth() - birthDate.getMonth();
+            const days = currentDate.getDate() - birthDate.getDate();
+
+            let totalMonths = years * 12 + months;
+            let totalDays = 0;
+
+            if (days < 0) {
+                totalMonths -= 1;
+                const lastMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
+                totalDays = lastMonthDate.getDate() + days;
+            } else {
+                totalDays = days;
+            }
+
+            document.getElementById('result').innerHTML = `月龄: ${totalMonths} 个月，天数: ${totalDays} 天`;
+        }
+    </script>
+</body>
+</html>
